@@ -85,7 +85,7 @@ def get_julia_game_function(poly):
 def get_julia_moment_function(poly):
     
     # Construct the header and initialization part of the Julia function
-    julia_code = f"function get_moment_matrix(basis)\n"
+    julia_code = f"function get_moment_matrix(Re_M, Im_M, basis)\n"
     julia_code += "    w = exp(2*pi*im/3)\n"
     julia_code += "    game_poly = [\n"
 
@@ -94,7 +94,7 @@ def get_julia_moment_function(poly):
         # Convert sympy expressions to Julia-friendly strings
         variables_str = ", ".join([str(var).replace('**', '^') for var in variables])
         coeff_str = str(coeff).replace('**', '^')
-        julia_code += f"       [{coeff_str}, get_id({variables_str}, basis)],\n"
+        julia_code += f"       [{coeff_str}, get_id({variables_str}, basis, op_degree)],\n"
 
     # Finalize the function
     julia_code += "    ]\n"
